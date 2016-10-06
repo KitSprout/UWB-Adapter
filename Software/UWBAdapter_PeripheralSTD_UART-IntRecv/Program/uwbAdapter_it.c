@@ -1,10 +1,30 @@
-/*====================================================================================================*/
-/*====================================================================================================*/
+/**
+  *      __            ____
+  *     / /__ _  __   / __/                      __  
+  *    / //_/(_)/ /_ / /  ___   ____ ___  __ __ / /_ 
+  *   / ,<  / // __/_\ \ / _ \ / __// _ \/ // // __/ 
+  *  /_/|_|/_/ \__//___// .__//_/   \___/\_,_/ \__/  
+  *                    /_/   github.com/KitSprout    
+  * 
+  * @file    uwbAdapter_it.c
+  * @author  KitSprout
+  * @date    6-Oct-2016
+  * @brief   
+  * 
+  */
+
+/* Includes --------------------------------------------------------------------------------*/
 #include "drivers\stm32f4_system.h"
 
-#include "uwbAdapter_bsp.h"
-/*====================================================================================================*/
-/*====================================================================================================*/
+/** @addtogroup STM32_Interrupt
+  * @{
+  */
+
+/* Private variables -----------------------------------------------------------------------*/
+extern pFunc IRQEven_UART1;
+
+/* Private functions -----------------------------------------------------------------------*/
+
 void NMI_Handler( void ) { while(1); }
 void HardFault_Handler( void ) { while(1); }
 void MemManage_Handler( void ) { while(1); }
@@ -14,8 +34,7 @@ void SVC_Handler( void ) {}
 void DebugMon_Handler( void ) {}
 void PendSV_Handler( void ) {}
 void SysTick_Handler( void ) { HAL_IncTick(); }
-/*====================================================================================================*/
-/*====================================================================================================*/
+
 //void WWDG_IRQHandler( void )
 //void PVD_IRQHandler( void )
 //void TAMP_STAMP_IRQHandler( void )
@@ -52,7 +71,7 @@ void SysTick_Handler( void ) { HAL_IncTick(); }
 void USART1_IRQHandler( void )
 {
   if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET) {
-    UART1_irqEven();
+    IRQEven_UART1();
   }
   USART_ClearFlag(USART1, USART_IT_RXNE);
 }
@@ -79,5 +98,5 @@ void USART1_IRQHandler( void )
 //void FPU_IRQHandler( void )
 //void SPI4_IRQHandler( void )
 //void SPI5_IRQHandler( void )
-/*====================================================================================================*/
-/*====================================================================================================*/
+
+/*************************************** END OF FILE ****************************************/
