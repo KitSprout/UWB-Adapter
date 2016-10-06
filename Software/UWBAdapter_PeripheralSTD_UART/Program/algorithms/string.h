@@ -1,23 +1,49 @@
-/* #include "algorithm_string.h" */
+/**
+  *      __            ____
+  *     / /__ _  __   / __/                      __  
+  *    / //_/(_)/ /_ / /  ___   ____ ___  __ __ / /_ 
+  *   / ,<  / // __/_\ \ / _ \ / __// _ \/ // // __/ 
+  *  /_/|_|/_/ \__//___// .__//_/   \___/\_,_/ \__/  
+  *                    /_/   github.com/KitSprout    
+  * 
+  * @file    string.h
+  * @author  KitSprout
+  * @date    6-Oct-2016
+  * @brief   
+  * 
+  */
 
-#ifndef __ALGORITHM_STRING_H
-#define __ALGORITHM_STRING_H
+/* Define to prevent recursive inclusion ---------------------------------------------------*/
+#ifndef __STRING_H
+#define __STRING_H
 
-#include "stm32f4xx.h"
-/*====================================================================================================*/
-/*====================================================================================================*/
-typedef enum {
-  Type_B = 2,   // 無號數二進制
-  Type_O = 8,   // 無號數八進制
-  Type_D = 10,  // 無號數十進制
-  Type_H = 16,  // 無號數十六進制
-  Type_I = 0,   // 有號數
-  Type_F = 1,   // 浮點數
-} StringType;
-/*====================================================================================================*/
-/*====================================================================================================*/
-void     num2Str( StringType type, uint8_t lens, char *pStr, int32_t number );
-uint16_t lenOfStr( char *pStr );
-/*====================================================================================================*/
-/*====================================================================================================*/
+#ifdef __cplusplus
+ extern "C" {
 #endif
+
+/* Includes --------------------------------------------------------------------------------*/
+#include <string.h>
+#include "stm32f4xx.h"
+
+/* Exported types --------------------------------------------------------------------------*/
+typedef enum {
+  S_BIN   = 2,   /* unsigned binary      */
+  S_OCT   = 8,   /* unsigned octal       */
+  S_DEC   = 10,  /* unsigned decimal     */
+  S_HEX   = 16,  /* unsigned hexadecimal */
+  S_INT   = 0,   /* signed decimal       */
+  S_FLOAT = 1,   /* float point          */
+} StringType_t;
+
+/* Exported constants ----------------------------------------------------------------------*/
+/* Exported functions ----------------------------------------------------------------------*/  
+void     num2Str( StringType_t type, uint8_t lens, char *pStr, int32_t number );
+uint16_t lenOfStr( char *pStr );
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+
+/*************************************** END OF FILE ****************************************/
