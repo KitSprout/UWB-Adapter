@@ -72,23 +72,6 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=KBRYAYPA
 
-[Document3]
-DocumentPath=UWB-Adapter_Dwf.PCBDwf
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=
-
 [Configuration1]
 Name=Default Configuration
 ParameterCount=0
@@ -1064,9 +1047,9 @@ Net3=NetName=D_SCK|NetColor=$0000BE00
 Net4=NetName=PB10|NetColor=$00FF6EFF
 Net5=NetName=PA2|NetColor=$00FF6EFF
 Net6=NetName=VRX|NetColor=$000083FD
-Net7=NetName=SDI|NetColor=$00FF6E6E
-Net8=NetName=SDO|NetColor=$00FF6E6E
-Net9=NetName=SWCLK|NetColor=$006E6EFF
+Net7=NetName=SWCLK|NetColor=$006E6EFF
+Net8=NetName=SDI|NetColor=$00FF6E6E
+Net9=NetName=SDO|NetColor=$00FF6E6E
 Net10=NetName=LED_R|NetColor=clYellow
 Net11=NetName=D_IRQ|NetColor=$0000BE00
 Net12=NetName=D_WAKE|NetColor=$0000BE00
