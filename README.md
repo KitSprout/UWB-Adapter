@@ -1,8 +1,8 @@
 [UWB-Adpater](https://github.com/KitSprout/UWB-Adapter)
 ========
 * Author  : [Hom](http://about.me/Hom)
-* Version : v1.0
-* Update  : 2016/09/13
+* Version : v1.2
+* Update  : 2016/10/24
 
 Description
 ========
@@ -13,20 +13,16 @@ License
 * 硬體(Hardware)採用 [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/deed.zh_TW)  方式授權 
   
 　　<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh_TW"><img alt="創用 CC 授權條款" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/tw/80x15.png" /></a>  
-　　<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"> UWB-Adpater v1.0 </span>由<a xmlns:cc="http://creativecommons.org/ns#" href="http://about.me/Hom" property="cc:attributionName" rel="cc:attributionURL"> Hom </a>製作，以<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh_TW"> 創用CC 姓名標示-相同方式分享 4.0 國際 授權條款 </a>釋出。  
+　　<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"> UWB-Adpater v1.2 </span>由<a xmlns:cc="http://creativecommons.org/ns#" href="http://about.me/Hom" property="cc:attributionName" rel="cc:attributionURL"> Hom </a>製作，以<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh_TW"> 創用CC 姓名標示-相同方式分享 4.0 國際 授權條款 </a>釋出。  
 
 * 軟體(Software)採用 [MIT License](http://opensource.org/licenses/MIT) 方式授權  
 
 Hardware
 ========
-* 控制器　 : [STM32F411C](http://www.st.com/web/en/catalog/mmc/FM141/SC1169/SS1577/LN1877/PF260148) 48Pin 100MHz DSP FPU
+* 控制器　 : [STM32F411CE](http://www.st.com/web/en/catalog/mmc/FM141/SC1169/SS1577/LN1877/PF260148) 48Pin 100MHz DSP FPU
 * UWB 　　 : DecaWave [DWM1000](http://www.decawave.com/products/dwm1000-module)
-* PCB 尺寸 : 20 x 45 mm
-* 設計軟體 [Altium Designer 16](http://www.altium.com/en/products/altium-designer) ( PcbLib use AD [PcbLib v2.8](https://github.com/KitSprout/AltiumDesigner_PcbLibrary/releases/tag/v2.9) )
-
-Software
-========
-
+* PCB 尺寸 : 18 x 45 mm
+* 設計軟體 [Altium Designer 16](http://www.altium.com/en/products/altium-designer) ( PcbLib use AD [PcbLib v2.9](https://github.com/KitSprout/AltiumDesigner_PcbLibrary/releases/tag/v2.9) )
 
 Related Documents
 ========
@@ -34,12 +30,11 @@ Related Documents
 
 View
 ========
-<img src="https://lh3.googleusercontent.com/DaSfzpeZfQVvyZ0J9R5nH7KJ0-Wu_arCofTGUKGy74lzufPwtPYcDZtxYI7wgF09iNl5TNNDKQKHV9Pe9xazjQUz12A2iDLN5hNr3nJH0_fPvdI8eA940cYqtqKhkkJFpxNrJTTFxCrRrtoDhu7dzkm4s_Es7_BQoTg7Gt0GZ_FXXZESZH62veL3NXAWKi3UJaQWrpFwRqf9qnjGh4CW7VHvcopmn6Kw7Yjw3eEK3Ac7c4WOhwXbXADYy_bEHTITdihaSVPRMrnM4BQd1VTXmUHztiz7Js66poEcHTBWD40OKKBHiE3RNVk-AEqFpMfOgmpOYfq3WrXZWj-eBvkcoRrmF77PdkRBrE8Kee7JKiHC6FpC5G6mnDs-3SKpE2wO6hH6pAmL_wSYLhYEeAV8NuLdqCviTD97w1RKDQ9M1s2pVKE_t8gw41dTRhQ4uUPRjJ42QorF-j7EQ6KrEDc1BE-n7RoZQ3tf6N9-oKt4zC-Qp86b1MqJV1d_8ZqNcIq-_Yxc8Zmj-f11W69XEpfZT4soFAES6diOdQlWh1iyuJmrJAK9tMDFW0RorTY2aKw1gIoF7Xvk4FZp38qfaxVQFYcHaA6u92w6NNS0c3I7F7hcK72W7g=w1274-h955-no"/>
-<img src="https://lh3.googleusercontent.com/xrH78t7kvFd-e9IX7N9VEfGFNt2klRsUjnuCyqIAXT35qY0aGjk0AVuAtafno5eKB3DAiXcPcEfD8omTFgalIThtrMW8DvKvj5_-Sy7swP1jdje9u2U3MP-yLZWwNQtiUnh2mBddp8SlC_KBVHVrrZWH-lNdSb-_8Ccb-IvxtH1dlb8jGjF7JaYKM6aKF-Jwozhx85XXeA-SQN0a6hgHDXZ3R63xx9KH7zOesTrFm8-dAEQVR9mpiorMxOctj3-_OSZUvv5r4M-sAWt3tfPj99tnz3e3wxuCsO1L14M9DNyVVTnTJXxEVDDPJgb_ivfsHtriRf6P9FjhhmlUyfAJXeuj45YMzSUxyHh_AlBqKRhJgzfCsFdNPAnaiM31hfmye_h2a8uwG2geFLlAQWFn6sviKLVvUCTXoFUUWiP_UciT9KV99VIMyD01OjlR15GQ0HzO0zkwkGhYnwnzJQIeM6CbSJPIOL5OB1U12sVVCj31ko6NFE6ncvVn9z6gLtuOF7CZ6DqTEawq0wqOHsivejMfnYt5sKDwTzDsU1hDKirFCK3zEqW7E_ua_nxu5og4B6pjOKKJYNS8yHibtvj9eIS330Gcm7WwTt2M-kcmca39tJb5WA=w1057-h775-no"/>
-
+<img src="https://lh3.googleusercontent.com/fk2Kc9odZnPG5ZeOJ6eZNhcj91HX9Rdyk078w6wL3rfm9mlew1GjFBH6mgCDM-Ib-ilwncA5m2rcO-9EiJsEZAA4aGt3liCj0l-JwmDymD-1LtKpG3JcCMYZof0KEep4byqZ91EISE7IFPickm6-M8CVQBjGmOK_klZSlhKVoUPCkmFb4wl0omlvsg2U12XuhoigBFnf_DeVVJyZMPTXLYPios7s7fhfpkmzL2znr6fLPhfobdv8S6DtvkSHvwDwntvDSuVJWLgHaxqSGJdW-aZOSOl1Ugg1Pk3BVGK8gYyF4rmMaxgkAOg0bFz7nLQA8iDKkfxlyEM57CfRZtClPn-VAFNq2pKK8xXCIX9s-jXJvJ_lStqEUbmERKiU4v6brxP6_e9D9Ja_Cfqiv6e13YX-5YQ3d3n8DhNkwlCMxg8ok4JVJyToOa21nsCulMVUB_HV60tb8HsnWb9K-8Q4QECD5eSLjgR2uR7P2RAtkZ6lWedDP0lDzDQnbcwetrRXFv98POnxGlzbDShPuoJKwhEGRy4hw8zTffX_Zd9qLUMDHIc6XGJm8qnAcs_SlAfK9aU1H8NoSsZKbZyTnvQFKm-ERX9-3hjBWr9Iwb4mbEBd83pu=w1027-h770-no"/>
+<img src="https://lh3.googleusercontent.com/s-TP3LNFN2ce6tsQohVsCh5CHz1Mj-ux-X-71d0hqgLHZDZifz0vshtw4ve0HO5wCff2Mzwj7EM5v0jBRoRMEEND8hxdXVT3lRSfEdGMzK0kZ9kS1TtAb-fgXCu_5cpH8vKxwEB406c-QU5W4gmEFfoJ9XRNpYMp81rT6YBmX7lRmNiJNJhVM9iH5LFvYUVo-RGHWJegiQo7S74w5M8b7Iqt9kcWpkjWalIkk3ZzNXkTNpQadr8W_E5rnuDfdELm3glFO_O4coJFF0avwyeESf3xsKzzCZ9qY8tuitbml7T9EJHrAyA_qV-9-LDij_g-fo-Rbj_KdK4lbhB4zEV80asNGpVvKSXj0VIgebkvxw_7FFEClpRgv8jSgCkandR1yebtDhXD8syhELVfL95RAqxK5TN-jKQNTGcTxXQeQupW8TF2JTE29zx4h5eVhd8cdxJsX4CK6t80J_EFjErKcZXu-PX4zxbSubDRBqIS472d9C0VTbMgOpJkAJ2rC5uwmeRRMg8YPlqviojl1C5yQCNatMX3kU1klN8Pnjkj2jHmYy3o9x_N4_pqDgGPyDs0TqnNh7FvfeqfNegQv1JNBRBGx6ZqbGz3dhpx1e0dA2mOAQvC=w1146-h770-no"/>
 <br />
-[more photo...](https://goo.gl/photos/ZdrpX1kvVhHjHhLu7)
+[more photo...](https://goo.gl/photos/W93huj9bQzaHpJsv7)
 
 Schematic
 ========
-<img src="https://lh3.googleusercontent.com/KhxybH99FP8IcjEvv_sCG0FTx9luJRgMkjn7dnYSP7kPLICY0fil9jPJ5gf8aNyzvuK4hrXqDjbXVlH3eCkBXAfM3VAfzWMvyGPzrS4zmX4QRMPh65JXBv1lK3s-zYyeDeAtds60qHTEHyg_rHCZXeckx0NS3vb8t5z1o5L3PXqr4ddQQZqSPnow9QoWN_JIVj2CICrdaDqZTVLc6DRpLJetXZNYv7wvQt6LsVZVkU4EtJHDY5HDF8BUhOfTMan64Hwe9DCV6W-xO0C6CRQlGekc5fuy8GKxjAzrFCOltXQOSiSevFw189ziEguoSpW-fxBgY4-6tG1nF3GIqhu71YFekXsrEYKwUaigFOgh3j-u8mw-lijad45blS4MtbGZ_ECFkoMWyiof6OQkWCvi4brm3QTYlgfuEFgroa7NzZO0ZoJ54LgL5xOHOWqzay2NZW6IdF7phzdZdYdDrPanvrV1NdamqUkYGGyQc2AqaLS8gA29jER4gFEl7JVzFptsW26dyg2zJXqa4gOkuZx8X-hlT5O4iDCQpGNkj2H6KqLhtyyPFQh0TkKLubNsMC4BGqGloXR8cioDtZ3JWubWypccBuOGfEycObfriBizV9g3wTM6yg=w1292-h775-no"/>
+<img src="https://lh3.googleusercontent.com/Wc08Ktbk6MUL2W9X8YwCiS4WFa_gi31MC_1IWu6o_CF-cFNs8evkTojFijbeqiLg-1qPumgdc2H9h-hRS_HXvAtb43-zfLJUNn2CmL8XdrWtvRYEqFtN2M89HXvSE6MPmH63u5rPEmG6e01JR4dBvx3XdJbavF39yQJ8P_Ch190HrWiAKaE5gwMaG0EWJ35CNjr8QCq4Qje-4NHH3JQtrLNDCA3MEWx2BgB3BNdXFEDZPn6c-lXTSRcLbIJGynmLxLgQC-JqnPWFHJb3tpRz11s60OU099xKf9pFmQ3tXbYZeb9E8hSacF5t-kFLJzC8C1pTSmVIXNYX2sOOL_UD1eQL3uK66zES_BaXkW1aaKTqnS-WEZWy-iX3gQ4I6E3o1cVk1J8w8-nXk9-O1usiaGsSHRoYq8PAD99B8wBT9lc86PRgBt_yTKojEV52Aq2n4HFqg8A566U3km3KiO4mZAys1CWWF_lYYNgD5hOtjJSIIWumpyLAajaONYM_2awz3N39UKCLwzlkvWUieKL1YOhYX3yU1Jail3YThg6wHRTb_uecl8pOcTGdgPt-w27HIjM7Pdsz_wmudeH-77q1EZw9hT2Iau7R2Qpd5NZTwngLA7g-=w1155-h770-no"/>
