@@ -1,9 +1,9 @@
-[UWB-Adpater](https://github.com/KitSprout/UWB-Adapter)
+UWB-Adpater
 ========
 [![GitHub version](https://img.shields.io/badge/version-v1.2-brightgreen.svg)](https://github.com/KitSprout/UWB-Adapter)
 [![GitHub old version](https://img.shields.io/badge/old%20version-%20v1.0-green.svg)](https://github.com/KitSprout/UWB-Adapter/releases/tag/v1.0)
 [![GitHub license](https://img.shields.io/badge/license-%20MIT%20%2F%20CC%20BY--SA%204.0-blue.svg)](https://github.com/KitSprout/UWB-Adapter/blob/master/LICENSE)
-[![GitHub pcb library](https://img.shields.io/badge/pcb%20library-%20v2.9-blue.svg)](https://github.com/KitSprout/AltiumDesigner_PcbLibrary/releases/tag/v2.9)
+[![GitHub pcb library](https://img.shields.io/badge/pcb%20library-%20v2.9-yellow.svg)](https://github.com/KitSprout/AltiumDesigner_PcbLibrary/releases/tag/v2.9)
 
 
 UWB Adapter 是一款主要是以電腦開發為主的 UWB 室內定位模組，算是一個簡化版的 [KDWM1000](https://github.com/KitSprout/KDWM1000)，將感測器去掉，並結合具 VCP 功能的 JLINK 燒錄器，隨身碟的外型，只需要插入 USB 孔，就可以燒錄程式，透過 UART 與控制器通訊。
