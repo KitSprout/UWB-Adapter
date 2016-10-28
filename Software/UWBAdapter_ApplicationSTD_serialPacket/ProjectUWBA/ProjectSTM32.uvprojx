@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>KDWM1000</TargetName>
+      <TargetName>STM32F411C</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
@@ -330,6 +330,7 @@
             <vShortWch>0</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER, STM32F411xE, ARM_MATH_CM4, __FPU_PRESENT = 1</Define>
@@ -414,6 +415,11 @@
               <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f4xx_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f4xx_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Program\stm32f4xx_conf.h</FilePath>
@@ -442,11 +448,6 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Program\main.c</FilePath>
-            </File>
-            <File>
-              <FileName>uwbAdapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Program\uwbAdapter.c</FilePath>
             </File>
             <File>
               <FileName>uwbAdapter_bsp.c</FileName>

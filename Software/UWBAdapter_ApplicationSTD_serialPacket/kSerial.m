@@ -1,4 +1,3 @@
-
 classdef kSerial < handle
 
 properties (SetAccess = public)
@@ -122,6 +121,7 @@ methods
         s.packet.recvBufLengths = 0;
         s.packet.recvBuffer     = zeros(s.packet.recvBufSize, 1);
 
+        s.packet.sequenceNum    = 0;
         s.packet.availableData  = 0;
         s.packet.availableIndex = zeros(1, 256);        % fix(s.packet.recvBufSize / s.packet.packetSize) + 1
     end
@@ -135,7 +135,7 @@ methods
         % update packet information
         s.packet.dataLengths = dataLens;
         s.packet.dataType    = dataType;
-        s.packet.packetSize  = 6 + dataLens * s.sizeof(dataType);
+        s.packet.packetSize  = 8 + dataLens * s.sizeof(dataType);
 
         % start to read
         nBytes = get(s.serial, 'BytesAvailable');
@@ -168,12 +168,13 @@ methods
                     i = s.packet.availableIndex(indexLens);
                     s.packet.gType = s.getDataType(fix(s.packet.recvBuffer(i + 3) / 16));
                     s.packet.gLens = s.packet.recvBuffer(i + 2) + mod(s.packet.recvBuffer(i + 3), 16) * 256 + 1;
+                    s.packet.sequenceNum = typecast(uint8(s.packet.recvBuffer(i + s.packet.packetSize - 4 : i + s.packet.packetSize - 3)), 'uint16');
 
                     % get data from buffer
                     s.packet.data = zeros(s.packet.dataLengths, indexLens);
                     for k = 1 : indexLens
                         j = s.packet.availableIndex(k);
-                        s.packet.data(:, k) = typecast(uint8(s.packet.recvBuffer(j + 4 : j + s.packet.packetSize - 3)), s.packet.dataType);    % s.packet.gType
+                        s.packet.data(:, k) = typecast(uint8(s.packet.recvBuffer(j + 4 : j + s.packet.packetSize - 5)), s.packet.dataType);    % s.packet.gType
                     end
 
                     % update recv buffer & lengths
@@ -187,6 +188,11 @@ methods
         varargout = { s.packet.data, s.packet.availableData };
     end
 
+    function freq = getFreq( s, index, length )
+        sec_s = s.dataBuffer(index(1), end - length + 1) * 60 + s.dataBuffer(index(2), end - length + 1) + s.dataBuffer(index(3), end - length + 1);
+        sec_e = s.dataBuffer(index(1), end) * 60              + s.dataBuffer(index(2), end)              + s.dataBuffer(index(3), end);
+        freq = length / (sec_e - sec_s);
+    end
 end
 
 methods (Access = private)
@@ -201,8 +207,8 @@ methods (Access = private)
             case 5,   type = 'uint32';
             case 6,   type = 'int64';
             case 7,   type = 'uint64';
-            case 8,   type = 'single';
-            case 9,   type = 'double';
+            case 10,  type = 'single';
+            case 11,  type = 'double';
         end
     end
 

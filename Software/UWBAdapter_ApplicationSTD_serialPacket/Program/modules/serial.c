@@ -1,45 +1,60 @@
-/*====================================================================================================*/
-/*====================================================================================================*/
+/**
+  *      __            ____
+  *     / /__ _  __   / __/                      __  
+  *    / //_/(_)/ /_ / /  ___   ____ ___  __ __ / /_ 
+  *   / ,<  / // __/_\ \ / _ \ / __// _ \/ // // __/ 
+  *  /_/|_|/_/ \__//___// .__//_/   \___/\_,_/ \__/  
+  *                    /_/   github.com/KitSprout    
+  * 
+  * @file    serial.c
+  * @author  KitSprout
+  * @date    28-Oct-2016
+  * @brief   
+  * 
+  */
+
+/* Includes --------------------------------------------------------------------------------*/
 #include "drivers\stm32f4_system.h"
 #include "drivers\stm32f4_usart.h"
-#include "algorithms\string.h"
 #include "modules\serial.h"
-/*====================================================================================================*/
-/*====================================================================================================*/
-#define UARTx                   USART1
-#define UARTx_CLK_ENABLE()      RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE)
-#define UARTx_IRQn              USART1_IRQn
 
-#define UARTx_RX_PIN            GPIO_Pin_6
-#define UARTx_RX_GPIO_PORT      GPIOB
-#define UARTx_RX_AF             GPIO_AF_USART1
-#define UARTx_RX_SOURCE         GPIO_PinSource6
+/** @addtogroup STM32_Module
+  * @{
+  */
 
-#define UARTx_TX_PIN            GPIO_Pin_7
-#define UARTx_TX_GPIO_PORT      GPIOB
-#define UARTx_TX_AF             GPIO_AF_USART1
-#define UARTx_TX_SOURCE         GPIO_PinSource7
+/* Private typedef -------------------------------------------------------------------------*/
+/* Private define --------------------------------------------------------------------------*/
+#define UARTx                 USART1
+#define UARTx_CLK_ENABLE()    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE)
+#define UARTx_IRQn            USART1_IRQn
 
-#define UARTx_BAUDRATE          256000
-#define UARTx_BYTESIZE          USART_WordLength_8b
-#define UARTx_STOPBITS          USART_StopBits_1
-#define UARTx_PARITY            USART_Parity_No
-#define UARTx_HARDWARECTRL      USART_HardwareFlowControl_None
-#define UARTx_MODE              USART_Mode_Rx | USART_Mode_Tx
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_Config
-**功能 : Serial Config
-**輸入 : None
-**輸出 : None
-**使用 : Serial_Config();
-**====================================================================================================*/
-/*====================================================================================================*/
-void Serial_Config( void )
+#define UARTx_TX_PIN          GPIO_Pin_6
+#define UARTx_TX_GPIO_PORT    GPIOB
+#define UARTx_TX_AF           GPIO_AF_USART1
+#define UARTx_TX_SOURCE       GPIO_PinSource6
+
+#define UARTx_RX_PIN          GPIO_Pin_7
+#define UARTx_RX_GPIO_PORT    GPIOB
+#define UARTx_RX_AF           GPIO_AF_USART1
+#define UARTx_RX_SOURCE       GPIO_PinSource7
+
+#define UARTx_BAUDRATE        256000
+#define UARTx_BYTESIZE        USART_WordLength_8b
+#define UARTx_STOPBITS        USART_StopBits_1
+#define UARTx_PARITY          USART_Parity_No
+#define UARTx_HARDWARECTRL    USART_HardwareFlowControl_None
+#define UARTx_MODE            (USART_Mode_Rx | USART_Mode_Tx)
+
+/* Private macro ---------------------------------------------------------------------------*/
+/* Private variables -----------------------------------------------------------------------*/
+/* Private function prototypes -------------------------------------------------------------*/
+/* Private functions -----------------------------------------------------------------------*/
+
+void Serial_Config( uint8_t interrupt )
 {
   GPIO_InitTypeDef GPIO_InitStruct;
   USART_InitTypeDef UART_InitStruct;
-//  NVIC_InitTypeDef NVIC_InitStruct;
+  NVIC_InitTypeDef NVIC_InitStruct;
 
   /* UART Clk ******************************************************************/
   UARTx_CLK_ENABLE();
@@ -61,12 +76,12 @@ void Serial_Config( void )
   GPIO_Init(UARTx_RX_GPIO_PORT, &GPIO_InitStruct);
 
   /* UART IT *******************************************************************/
-//  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
-//  NVIC_InitStruct.NVIC_IRQChannel                   = UARTx_IRQn;
-//  NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x000F;
-//  NVIC_InitStruct.NVIC_IRQChannelSubPriority        = 0;
-//  NVIC_InitStruct.NVIC_IRQChannelCmd                = ENABLE;
-//  NVIC_Init(&NVIC_InitStruct);
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
+  NVIC_InitStruct.NVIC_IRQChannel                   = UARTx_IRQn;
+  NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x000F;
+  NVIC_InitStruct.NVIC_IRQChannelSubPriority        = 0;
+  NVIC_InitStruct.NVIC_IRQChannelCmd                = ENABLE;
+  NVIC_Init(&NVIC_InitStruct);
 
   /* UART Init *****************************************************************/
   UART_InitStruct.USART_BaudRate            = UARTx_BAUDRATE;
@@ -78,162 +93,147 @@ void Serial_Config( void )
   USART_Init(UARTx, &UART_InitStruct);
 
   /* UART Enable ***************************************************************/
-//  USART_ITConfig(UARTx, USART_IT_RXNE, ENABLE);
+  if (interrupt == ENABLE) {
+    USART_ITConfig(UARTx, USART_IT_RXNE, ENABLE);
+  }
+  else {
+    USART_ITConfig(UARTx, USART_IT_RXNE, DISABLE);
+  }
   USART_Cmd(UARTx, ENABLE);
   USART_ClearFlag(UARTx, USART_FLAG_TC);
 }
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_SendByte
-**功能 : Send Byte
-**輸入 : SendByte
-**輸出 : None
-**使用 : Serial_SendByte('A');
-**====================================================================================================*/
-/*====================================================================================================*/
+
+/**
+  * @brief  Serial_SendByte
+  * @param  sendByte: 
+  * @retval None
+  */
 void Serial_SendByte( uint8_t sendByte )
 {
   UART_SendByte(UARTx, &sendByte);
 }
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_SendData
-**功能 : Send Data
-**輸入 : *sendData, lens
-**輸出 : None
-**使用 : Serial_SendData(sendData, lens);
-**====================================================================================================*/
-/*====================================================================================================*/
+
+/**
+  * @brief  Serial_SendData
+  * @param  sendData: 
+  * @param  lens: 
+  * @retval None
+  */
 void Serial_SendData( uint8_t *sendData, uint16_t lens )
 {
   UART_SendData(UARTx, sendData, lens);
 }
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_SendStr
-**功能 : Send String
-**輸入 : *pWord
-**輸出 : None
-**使用 : Serial_SendStr("Hellow World!");
-**====================================================================================================*/
-/*====================================================================================================*/
+
+/**
+  * @brief  Serial_SendStr
+  * @param  pWord: 
+  * @retval None
+  */
 void Serial_SendStr( char *pWord )
 {
-  while(*pWord != '\0') {
+  while (*pWord != '\0') {
     UART_SendByte(UARTx, (uint8_t*)pWord++);
   }
 }
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_SendNum
-**功能 : Send Number
-**輸入 : type, lens, sendNum
-**輸出 : None
-**使用 : Serial_SendNum(Type_D, 6, 1024);
-**====================================================================================================*/
-/*====================================================================================================*/
-void Serial_SendNum( StringType type, uint8_t lens, int32_t sendNum )
+
+/**
+  * @brief  Serial_SendNum
+  * @param  type: 
+  * @param  lens: 
+  * @param  sendNum: 
+  * @retval None
+  */
+void Serial_SendNum( StringType_t type, uint8_t lens, int32_t number )
 {
   char tmpStr[32] = {0};
   char *pWord = tmpStr;
 
-  num2Str(type, lens, tmpStr, sendNum);
+  num2Str(type, lens, tmpStr, number);
 
-  while(*pWord != '\0') {
+  while (*pWord != '\0') {
     UART_SendByte(UARTx, (uint8_t*)pWord++);
   }
 }
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_RecvByte
-**功能 : Recv Byte
-**輸入 : *recvByte
-**輸出 : None
-**使用 : recvByte = Serial_RecvByte();
-**====================================================================================================*/
-/*====================================================================================================*/
+
+/**
+  * @brief  Serial_RecvByte
+  * @param  None
+  * @retval receive byte
+  */
 uint8_t Serial_RecvByte( void )
 {
   uint8_t recvByte = 0;
   UART_RecvByte(UARTx, &recvByte);
   return recvByte;
 }
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_RecvData
-**功能 : Recv Data
-**輸入 : *recvData, lens
-**輸出 : None
-**使用 : Serial_RecvData(recvData, lens);
-**====================================================================================================*/
-/*====================================================================================================*/
+
+/**
+  * @brief  Serial_RecvData
+  * @param  recvData: 
+  * @param  lens: 
+  * @retval None
+  */
 void Serial_RecvData( uint8_t *recvData, uint16_t lens )
 {
   UART_RecvData(UARTx, recvData, lens);
 }
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_RecvDataWTO
-**功能 : Recv Data Wait Timeout
-**輸入 : *recvData, lens, timeoutMs
-**輸出 : state
-**使用 : state = Serial_RecvDataWTO(recvData, lens, timeoutMs);
-**====================================================================================================*/
-/*====================================================================================================*/
+
+/**
+  * @brief  Serial_RecvDataWTO
+  * @param  recvData: 
+  * @param  lens: 
+  * @param  timeoutMs: 
+  * @retval state of receive
+  */
 int8_t Serial_RecvDataWTO( uint8_t *recvData, uint16_t lens, int32_t timeoutMs )
 {
   return UART_RecvDataWTO(UARTx, recvData, lens, timeoutMs);
 }
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_RecvStr
-**功能 : Recv String
-**輸入 : *pWord
-**輸出 : None
-**使用 : Serial_RecvStr(recvStr);
-**====================================================================================================*/
-/*====================================================================================================*/
+
+/**
+  * @brief  Serial_RecvStr
+  * @param  pWord: 
+  * @retval None
+  */
 void Serial_RecvStr( char *pWord )
 {
   do {
     UART_RecvByte(UARTx, (uint8_t*)pWord++);
-  } while(*(pWord-1) != '\0');
+  } while (*(pWord-1) != '\0');
   *pWord = '\0';
 }
-/*====================================================================================================*/
-/*====================================================================================================*
-**函數 : Serial_RecvStrWTO
-**功能 : Recv String Wait Timeout
-**輸入 : *pWord, timeoutMs
-**輸出 : State
-**使用 : Serial_RecvStrWTO(RecvStr, 200);
-**====================================================================================================*/
-/*====================================================================================================*/
+
+/**
+  * @brief  Serial_RecvStrWTO
+  * @param  pWord: 
+  * @param  timeoutMs: 
+  * @retval state of receive
+  */
 int8_t Serial_RecvStrWTO( char *pWord, int32_t timeoutMs )
 {
   int8_t state = ERROR;
 
   do {
     state = UART_RecvByteWTO(UARTx, (uint8_t*)pWord++, timeoutMs);
-    if(state == ERROR)
+    if (state == ERROR)
       return ERROR;
-  } while(*(pWord-1) != '\0');
+  } while (*(pWord-1) != '\0');
   *pWord = '\0';
 
   return SUCCESS;
 }
-/*====================================================================================================*/
-/*====================================================================================================*/
+
 int fputc( int ch, FILE *f )
 {
   UARTx->DR = ((uint8_t)ch & (uint16_t)0x01FF);
-  while(!(UARTx->SR & USART_FLAG_TC));
+  while (!(UARTx->SR & USART_FLAG_TC));
   return (ch);
 }
+
 int fgetc( FILE *f )
 {
-  while(!(UARTx->SR & USART_FLAG_RXNE));
+  while (!(UARTx->SR & USART_FLAG_RXNE));
   return (uint16_t)(UARTx->DR & (uint16_t)0x01FF);
 }
-/*====================================================================================================*/
-/*====================================================================================================*/
+
+/*************************************** END OF FILE ****************************************/

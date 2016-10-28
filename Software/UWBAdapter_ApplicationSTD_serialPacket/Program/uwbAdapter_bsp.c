@@ -1,12 +1,39 @@
-/*====================================================================================================*/
-/*====================================================================================================*/
+/**
+  *      __            ____
+  *     / /__ _  __   / __/                      __  
+  *    / //_/(_)/ /_ / /  ___   ____ ___  __ __ / /_ 
+  *   / ,<  / // __/_\ \ / _ \ / __// _ \/ // // __/ 
+  *  /_/|_|/_/ \__//___// .__//_/   \___/\_,_/ \__/  
+  *                    /_/   github.com/KitSprout    
+  * 
+  * @file    uwbAdapter_bsp.c
+  * @author  KitSprout
+  * @date    6-Oct-2016
+  * @brief   
+  * 
+  */
+
+/* Includes --------------------------------------------------------------------------------*/
 #include "drivers\stm32f4_system.h"
 #include "modules\serial.h"
 #include "modules\kSerial.h"
-
 #include "uwbAdapter_bsp.h"
-/*====================================================================================================*/
-/*====================================================================================================*/
+#include "sampleRate.h"
+
+/** @addtogroup STM32_Program
+  * @{
+  */
+
+/* Private typedef -------------------------------------------------------------------------*/
+pFunc IRQEven_TIM4 = NULL;
+pFunc IRQEven_UART1 = NULL;
+
+/* Private define --------------------------------------------------------------------------*/
+/* Private macro ---------------------------------------------------------------------------*/
+/* Private variables -----------------------------------------------------------------------*/
+/* Private function prototypes -------------------------------------------------------------*/
+/* Private functions -----------------------------------------------------------------------*/
+
 void UWBA_GPIO_Config( void )
 {
   GPIO_InitTypeDef GPIO_InitStruct;
@@ -54,16 +81,45 @@ void UWBA_GPIO_Config( void )
   LED_G_Set();
   LED_B_Set();
 }
-/*====================================================================================================*/
-/*====================================================================================================*/
-pFunc UART1_irqEven = NULL;
+
 void UWBA_UART_Config( pFunc pUARTx )
 {
-  UART1_irqEven = pUARTx;
+  uint8_t interrupt = (pUARTx == NULL) ? DISABLE : ENABLE;
+  IRQEven_UART1 = pUARTx;
 
-  Serial_Config();
+  Serial_Config(interrupt);
   kSerial_config(Serial_SendByte);
   printf("\r\nHello World!\r\n\r\n");
 }
-/*====================================================================================================*/
-/*====================================================================================================*/
+
+void UWBA_TIM4_Config( pFunc pTIMx )
+{
+  NVIC_InitTypeDef NVIC_InitStruct;
+  TIM_TimeBaseInitTypeDef TIM_TimeBaseStruct;
+
+  IRQEven_TIM4 = pTIMx;
+
+  /* TIMX Clk ******************************************************************/
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+
+  /* NVIC Config ***************************************************************/
+  NVIC_InitStruct.NVIC_IRQChannel                   = TIM4_IRQn;
+  NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x02;
+  NVIC_InitStruct.NVIC_IRQChannelSubPriority        = 0;
+  NVIC_InitStruct.NVIC_IRQChannelCmd                = ENABLE;
+  NVIC_Init(&NVIC_InitStruct);
+
+  /* TIM Base Config ************************************************************/
+  TIM_TimeBaseStruct.TIM_Prescaler     = (SystemCoreClock / (SAMPLE_RATE_FREQ * 1000)) - 1;
+  TIM_TimeBaseStruct.TIM_Period        = 1000 - 1;
+  TIM_TimeBaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+  TIM_TimeBaseStruct.TIM_CounterMode   = TIM_CounterMode_Up;
+  TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStruct);
+
+  /* TIM Enable *****************************************************************/
+  TIM_ClearFlag(TIM4, TIM_FLAG_Update);
+  TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE);
+  TIM_Cmd(TIM4, ENABLE);
+}
+
+/*************************************** END OF FILE ****************************************/
