@@ -81,9 +81,10 @@ void UWBA_GPIO_Config( void )
 
 void UWBA_UART_Config( pFunc pUARTx )
 {
+  uint8_t interrupt = (pUARTx == NULL) ? DISABLE : ENABLE;
   IRQEven_UART1 = pUARTx;
 
-  Serial_Config();
+  Serial_Config(interrupt);
   printf("\r\nHello World!\r\n\r\n");
 }
 

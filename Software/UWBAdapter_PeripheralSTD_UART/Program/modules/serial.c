@@ -8,7 +8,7 @@
   * 
   * @file    serial.c
   * @author  KitSprout
-  * @date    6-Oct-2016
+  * @date    28-Oct-2016
   * @brief   
   * 
   */
@@ -50,11 +50,11 @@
 /* Private function prototypes -------------------------------------------------------------*/
 /* Private functions -----------------------------------------------------------------------*/
 
-void Serial_Config( void )
+void Serial_Config( uint8_t interrupt )
 {
   GPIO_InitTypeDef GPIO_InitStruct;
   USART_InitTypeDef UART_InitStruct;
-//  NVIC_InitTypeDef NVIC_InitStruct;
+  NVIC_InitTypeDef NVIC_InitStruct;
 
   /* UART Clk ******************************************************************/
   UARTx_CLK_ENABLE();
@@ -76,12 +76,12 @@ void Serial_Config( void )
   GPIO_Init(UARTx_RX_GPIO_PORT, &GPIO_InitStruct);
 
   /* UART IT *******************************************************************/
-//  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
-//  NVIC_InitStruct.NVIC_IRQChannel                   = UARTx_IRQn;
-//  NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x000F;
-//  NVIC_InitStruct.NVIC_IRQChannelSubPriority        = 0;
-//  NVIC_InitStruct.NVIC_IRQChannelCmd                = ENABLE;
-//  NVIC_Init(&NVIC_InitStruct);
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
+  NVIC_InitStruct.NVIC_IRQChannel                   = UARTx_IRQn;
+  NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x000F;
+  NVIC_InitStruct.NVIC_IRQChannelSubPriority        = 0;
+  NVIC_InitStruct.NVIC_IRQChannelCmd                = ENABLE;
+  NVIC_Init(&NVIC_InitStruct);
 
   /* UART Init *****************************************************************/
   UART_InitStruct.USART_BaudRate            = UARTx_BAUDRATE;
@@ -93,7 +93,12 @@ void Serial_Config( void )
   USART_Init(UARTx, &UART_InitStruct);
 
   /* UART Enable ***************************************************************/
-//  USART_ITConfig(UARTx, USART_IT_RXNE, ENABLE);
+  if (interrupt == ENABLE) {
+    USART_ITConfig(UARTx, USART_IT_RXNE, ENABLE);
+  }
+  else {
+    USART_ITConfig(UARTx, USART_IT_RXNE, DISABLE);
+  }
   USART_Cmd(UARTx, ENABLE);
   USART_ClearFlag(UARTx, USART_FLAG_TC);
 }
